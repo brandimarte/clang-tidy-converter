@@ -3,6 +3,7 @@
 from enum import Enum
 import re
 
+
 class ClangMessage:
     class Level(Enum):
         UNKNOWN = 0
@@ -12,7 +13,9 @@ class ClangMessage:
         ERROR = 4
         FATAL = 5
 
-    def __init__(self, filepath=None, line=-1, column=-1, level=Level.UNKNOWN, message=None, diagnostic_name=None, details_lines=None, children=None):
+    def __init__(
+            self, filepath=None, line=-1, column=-1, level=Level.UNKNOWN, message=None, diagnostic_name=None,
+            details_lines=None, children=None):
         self.filepath = filepath if filepath is not None else ''
         self.line = line
         self.column = column
@@ -36,8 +39,10 @@ class ClangMessage:
             return ClangMessage.Level.FATAL
         return ClangMessage.Level.UNKNOWN
 
+
 class ClangTidyParser:
-    MESSAGE_REGEX = re.compile(r"^(?P<filepath>.+):(?P<line>\d+):(?P<column>\d+): (?P<level>\S+): (?P<message>.*?)( \[(?P<diagnostic_name>.*)\])?$")
+    MESSAGE_REGEX = re.compile(
+        r"^(?P<filepath>.+):(?P<line>\d+):(?P<column>\d+): (?P<level>\S+): (?P<message>.*?)( \[(?P<diagnostic_name>.*)\])?$")
     IGNORE_REGEX = re.compile(r"^error:.*$")
 
     def __init__(self):
@@ -62,13 +67,13 @@ class ClangTidyParser:
         regex_res = self.MESSAGE_REGEX.match(line)
         if regex_res is not None:
             return ClangMessage(
-                        filepath=regex_res.group('filepath'),
-                        line=int(regex_res.group('line')),
-                        column=int(regex_res.group('column')),
-                        level=ClangMessage.levelFromString(regex_res.group('level')),
-                        message=regex_res.group('message'),
-                        diagnostic_name=regex_res.group('diagnostic_name')
-                   )
+                filepath=regex_res.group('filepath'),
+                line=int(regex_res.group('line')),
+                column=int(regex_res.group('column')),
+                level=ClangMessage.levelFromString(regex_res.group('level')),
+                message=regex_res.group('message'),
+                diagnostic_name=regex_res.group('diagnostic_name')
+            )
         return None
 
     def _is_ignored(self, line):

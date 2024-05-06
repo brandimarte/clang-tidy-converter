@@ -5,8 +5,10 @@ import hashlib
 
 from ..parser import ClangMessage
 
+
 def remove_duplicates(l):
     return list(set(l))
+
 
 class CodeClimateFormatter:
     def __init__(self):
@@ -45,14 +47,14 @@ class CodeClimateFormatter:
         return text_lines
 
     def _extract_categories(self, message, args):
-        BUGRISC_CATEGORY='Bug Risk'
-        CLARITY_CATEGORY='Clarity'
-        COMPATIBILITY_CATEGORY='Compatibility'
-        COMPLEXITY_CATEGORY='Complexity'
-        DUPLICATION_CATEGORY='Duplication'
-        PERFORMANCE_CATEGORY='Performance'
-        SECURITY_CATEGORY='Security'
-        STYLE_CATEGORY='Style'
+        BUGRISC_CATEGORY = 'Bug Risk'
+        CLARITY_CATEGORY = 'Clarity'
+        COMPATIBILITY_CATEGORY = 'Compatibility'
+        COMPLEXITY_CATEGORY = 'Complexity'
+        DUPLICATION_CATEGORY = 'Duplication'
+        PERFORMANCE_CATEGORY = 'Performance'
+        SECURITY_CATEGORY = 'Security'
+        STYLE_CATEGORY = 'Style'
 
         categories = []
         if 'bugprone' in message.diagnostic_name:
@@ -109,10 +111,10 @@ class CodeClimateFormatter:
             }
         else:
             location['positions'] = {
-               'begin': {
-                   'line': message.line,
-                   'column': message.column
-               }
+                'begin': {
+                    'line': message.line,
+                    'column': message.column
+                }
             }
         return location
 

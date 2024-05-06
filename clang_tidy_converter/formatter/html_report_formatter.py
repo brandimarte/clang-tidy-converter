@@ -6,7 +6,7 @@ import html
 import re
 
 
-NEWLINE = '\n';
+NEWLINE = '\n'
 
 
 class HTMLReportFormatter:
